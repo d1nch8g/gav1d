@@ -1,8 +1,8 @@
 package gav1d
 
 /*
-#cgo CFLAGS: -I${SRCDIR}/include/dav1d -I${SRCDIR}/build
-#cgo LDFLAGS: -L${SRCDIR}/build/src -ldav1d
+#cgo CFLAGS: -I${SRCDIR}/include/dav1d -I${SRCDIR}/include
+#cgo LDFLAGS: -L${SRCDIR}/lib -ldav1d
 #include <dav1d/dav1d.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -81,10 +81,10 @@ func (d *Decoder) Close() {
 
 func (d *Decoder) DecodeIVF(data []byte) ([]*Frame, error) {
 	if len(data) < 32 {
-		return nil, fmt.Errorf("слишком маленький файл для IVF")
+		return nil, fmt.Errorf("file too small for IVF")
 	}
 	if string(data[0:4]) != "DKIF" {
-		return nil, fmt.Errorf("не IVF файл (магик не DKIF)")
+		return nil, fmt.Errorf("not an IVF file (bad magic)")
 	}
 	data = data[32:]
 
