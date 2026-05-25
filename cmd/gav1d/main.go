@@ -40,10 +40,7 @@ func main() {
 	fmt.Printf("декодировано фреймов: %d\n", len(frames))
 
 	// Сохраняем первые 3 фрейма как PNG для визуальной проверки
-	saveN := 3
-	if len(frames) < saveN {
-		saveN = len(frames)
-	}
+	saveN := min(len(frames), 3)
 
 	for i := 0; i < saveN; i++ {
 		f := frames[i]
@@ -69,8 +66,8 @@ func saveFramePNG(f *gav1d.Frame, path string) error {
 
 	img := image.NewRGBA(image.Rect(0, 0, w, h))
 
-	for row := 0; row < h; row++ {
-		for col := 0; col < w; col++ {
+	for row := range h {
+		for col := range w {
 			yVal := float64(y[row*yStride+col])
 
 			// UV в I420 субдискретизированы 2x2
